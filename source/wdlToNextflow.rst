@@ -288,9 +288,17 @@ Expressions
         sub( input, pattern, replacement )
         length(array)
         ...
+   * - 8.
+     - Array element access
+     - ::
 
+        x = array[i]
+     - ::
 
-Tasks
+        //Use Groovy function, array can be channel
+        x = get( array, i )
+
+Task elements
 -----
 .. list-table::
    :header-rows: 1
@@ -321,9 +329,64 @@ Tasks
         }
 
      -  Not supported
+   * - 3.
+     - Private declarations
+     - ::
 
+        task task1 {
+        …
+        <Type> variable = <Value>
+        …
+        command { ...
 
+     -  ::
 
+         process task_name
+         …
+         script
+         variable = <Value>
+         """
+         …
+   * - 4.
+     - Runtime options
+     - ::
+
+        runtime {
+           maxRetries: 3
+           memory: "N GB"
+           preemptible: 1
+           disks: "local-disk ~{disk_size} HDD"
+           cpu: threads
+           docker: "image name"
+       }
+     -  ::
+
+         
+         maxRetries 3
+         memory "4*4 GB"
+
+  
+         cpus 4
+         container 'image_name'
+   * - 5.
+     - Optional inputs
+     - ::
+
+        input {
+           Sting mandatory
+           String opt = “Default”
+        }
+     - ::
+
+        input:
+        val mandatory
+        val opt
+        …
+        script:
+        opt = getDefault(opt, “Default”)
+        """
+        …
+        """
 
 Workflow
 --------
@@ -351,6 +414,102 @@ Workflow
 
         result_task1 = task1( val1 )
         task2( result_task1.result, val2 )
+   * - 2.
+     - Calling task with optional inputs
+     - ::
+
+        call task1 { 
+           mandatory = value
+           #optional = value2
+        }
+     - ::
+
+        task1( value , “NO_VALUE”)
+   * - 3.
+     - Multiple calls of task defined in the same document
+     - ::
+
+        task task1 {…}
+
+        call task1 as t1 { }
+        call task1 as t2 { }
+     - Not supported
+   * - 4.
+     - Expressions inside if
+     - ::
+
+        if (x > 2) {
+           Int y = x*2
+        }
+     - ::
+
+        if_map = x.multiMap { x -> 
+           def y = null
+           if ( x>2 ) {
+              y = x*2
+           }
+           y : y
+           x : x
+        }
+        y = if_map.y
+
+Cycles
+-------------
+.. list-table::
+   :header-rows: 1
+   :widths: 20 80 80 80
+
+   * - #
+     - Description
+     - WDL
+     - Nextflow
+   * - 1.
+     - Simple cycle
+     - ::
+
+        scatter ( file in files ) {
+           call task1 { input: arg1 = file }
+        }
+     - ::
+        file = files
+        task1( file )
+   * - 2.
+     - Cycle in range
+     - ::
+
+        scatter ( i in range(length(С)) ) {
+           call task1 { 
+              input: arg1 = i }
+        } 
+     - ::
+
+        //Use Groove functions
+        i = range( length(С) )
+        task1( i )
+   * - 3.
+     - Expressions in cycle
+     - ::
+
+        scatter ( i in array ) {
+          Int j = i*2
+          Int k = i*3
+        }
+     - ::
+
+        j = toChannel( array ).map { i -> i*2 }
+        k = toChannel( array ).map { i -> i*3 }
+   * - 4.
+     - Nested cycles
+     - ::
+
+        scatter ( i in array ) {
+           scatter ( j in array2 ) {
+              Array[Int] pair = [ i,j ]
+           }
+        }
+     - ::
+
+        pair = toChannel( array ).combine(toChannel(array2)).map{ i,j -> [i,j] }
 
 Supplementary functions 
 -----------------------
@@ -362,15 +521,15 @@ Supplementary functions
      - Function
      - Description
      - Code
-   * - #
+   * - 1.
      - get(arr, i)
      - Returns  element of arr with index i, arr may be Array or Channel.
      - TBA
-   * - #
+   * - 2.
      - getDefault(var, Default)
      - Returns var or Default if var is not defined.
      - TBA
-   * - #
+   * - 3.
      - toChannel(arr)
      - Creates channel from arr, if arr is channel already does nothing.
      - TBA
@@ -384,41 +543,51 @@ WDL functions implemented in Groovy
 
    * - #
      - Function
-     - Description
-   * - 1
+     - TBA
+   * - 1.
      - basename(path)
-     - Description  
-   * - 2
+     - TBA  
+   * - 2.
      - sub(input, pattern, replacement)
-     - Description  
-   * - 3
+     - TBA  
+   * - 3.
      - ceil
-     - Description  
-   * - 4
+     - TBA  
+   * - 4.
      - length
-     - Description  
-   * - 5
+     - TBA  
+   * - 5.
      - range
-     - Description  
-   * - 6
+     - TBA  
+   * - 6.
      - select_first
-     - Description  
-   * - 7
+     - TBA  
+   * - 7.
      - select_all
-     - Description  
-   * - 8
+     - TBA  
+   * - 8.
      - defined
-     - Description  
-   * - 9
+     - TBA  
+   * - 9.
      - read_string
-     - Description  
-   * - 10
+     - TBA  
+   * - 10.
      - read_int
-     - Description  
-   * - 11
+     - TBA  
+   * - 11.
      - read_float
-     - Description  
+     - TBA  
 
+Not supported yet 
+----------------------------------
+.. list-table::
+   :header-rows: 1
+   :widths: 20 80 80
 
-
+   * - #
+     - Name
+     - Description
+   * - 1.
+     - Comments
+     - Comments.
 
