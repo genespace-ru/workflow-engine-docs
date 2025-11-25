@@ -7,7 +7,7 @@ WDL to Nextflow
    :backlinks: top
 
 Workflow general structure
--------------
+--------------------------
 .. list-table::
    :header-rows: 1
    :widths: 100 100
@@ -89,7 +89,7 @@ Workflow general structure
         }
 
 Task and Process general structure
--------------
+----------------------------------
 .. list-table::
    :header-rows: 1
    :widths: 100 100
@@ -215,7 +215,7 @@ Imports
         include { mainWorkflow as alias } from './script
 
 Expressions
------------------
+-----------
 .. list-table::
    :header-rows: 1
    :widths: 20 80 80 80
@@ -299,7 +299,8 @@ Expressions
         x = get( array, i )
 
 Task elements
------
+-------------
+
 .. list-table::
    :header-rows: 1
    :widths: 20 80 80 80
@@ -390,6 +391,7 @@ Task elements
 
 Workflow
 --------
+
 .. list-table::
    :header-rows: 1
    :widths: 20 80 80 80
@@ -454,7 +456,8 @@ Workflow
         y = if_map.y
 
 Cycles
--------------
+------
+
 .. list-table::
    :header-rows: 1
    :widths: 20 80 80 80
@@ -513,6 +516,7 @@ Cycles
 
 Supplementary functions 
 -----------------------
+
 .. list-table::
    :header-rows: 1
    :widths: 20 80 80 80
@@ -536,7 +540,8 @@ Supplementary functions
  
  
 WDL functions implemented in Groovy 
-----------------------------------
+-----------------------------------
+
 .. list-table::
    :header-rows: 1
    :widths: 20 80 80
@@ -579,7 +584,8 @@ WDL functions implemented in Groovy
      - TBA  
 
 Not supported yet 
-----------------------------------
+-----------------
+
 .. list-table::
    :header-rows: 1
    :widths: 20 80 80

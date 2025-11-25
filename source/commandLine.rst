@@ -21,6 +21,7 @@ Usage
 Where <PATH_TO_WDL> is path to the WDL file. It will create file with the same name as <PATH_TO_WDL> with extension .nf.
 
 - To generate visual diagram:
+
 .. code-block::
 
   java -jar WDL2Nextflow.jar <PATH_TO_WDL> -i
