@@ -1,6 +1,10 @@
 WDL to Nextflow
 ===============
 
+.. contents::
+   :depth: 2
+   :local:
+   :backlinks: top
 
 Workflow general structure
 -------------
@@ -254,6 +258,14 @@ Expressions
 
         ... ? ... : ...
    * - 5.
+     - Default value
+     - ::
+
+        ~{ default="default_value" var }
+     - ::
+
+        ${ var ?: "default_value" }
+   * - 6.
      - Glob in result
      - ::
 
@@ -261,7 +273,7 @@ Expressions
      - ::
 
         "output/file_*.txt"
-   * - 6.
+   * - 7.
      - Predefined functions
      - ::
 
@@ -339,4 +351,74 @@ Workflow
 
         result_task1 = task1( val1 )
         task2( result_task1.result, val2 )
+
+Supplementary functions 
+-----------------------
+.. list-table::
+   :header-rows: 1
+   :widths: 20 80 80 80
+
+   * - #
+     - Function
+     - Description
+     - Code
+   * - #
+     - get(arr, i)
+     - Returns  element of arr with index i, arr may be Array or Channel.
+     - TBA
+   * - #
+     - getDefault(var, Default)
+     - Returns var or Default if var is not defined.
+     - TBA
+   * - #
+     - toChannel(arr)
+     - Creates channel from arr, if arr is channel already does nothing.
+     - TBA
+ 
+ 
+WDL functions implemented in Groovy 
+----------------------------------
+.. list-table::
+   :header-rows: 1
+   :widths: 20 80 80
+
+   * - #
+     - Function
+     - Description
+   * - 1
+     - basename(path)
+     - Description  
+   * - 2
+     - sub(input, pattern, replacement)
+     - Description  
+   * - 3
+     - ceil
+     - Description  
+   * - 4
+     - length
+     - Description  
+   * - 5
+     - range
+     - Description  
+   * - 6
+     - select_first
+     - Description  
+   * - 7
+     - select_all
+     - Description  
+   * - 8
+     - defined
+     - Description  
+   * - 9
+     - read_string
+     - Description  
+   * - 10
+     - read_int
+     - Description  
+   * - 11
+     - read_float
+     - Description  
+
+
+
 
