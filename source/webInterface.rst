@@ -6,11 +6,13 @@ Open Web application in browser (workflow.genespace.ru). You will see interface.
 
 .. image:: webInterface_images/interface.png
    :alt: interface
+   :width: 600px 
 
 Right click on GenericFDC root folder and select New folder.
 
 .. image:: webInterface_images/new_folder.png
    :alt: new_folder
+   :width: 600px 
 
 In appeared dialog write name for you folder and press Ok.
 
