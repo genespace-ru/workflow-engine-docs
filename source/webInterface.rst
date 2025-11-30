@@ -20,10 +20,6 @@ In appeared dialog write name for you folder and press Ok.
    :alt: new_folder_dialog
 
 To import WDL to created folder right click on it and select Import WDL.
-
-.. image:: webInterface_images/import_wdl.png
-   :alt: import_wdl
-
 In appeared window choose Computer and find appropriate file in your file system.
 
 .. image:: webInterface_images/browse_file.png
