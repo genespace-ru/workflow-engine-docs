@@ -445,16 +445,7 @@ Workflow
         }
      - ::
 
-        if_map = x.multiMap { x -> 
-           def y = null
-           if ( x>2 ) {
-              y = x*2
-           }
-           y : y
-           x : x
-        }
-        y = if_map.y
-
+        y = x.map{ (it>2)? it*2 : null }.filter{ it != null }
 Cycles
 ------
 
