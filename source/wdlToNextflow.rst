@@ -445,7 +445,7 @@ Workflow
         }
      - ::
 
-        y = x.map{ (it>2)? it*2 : null }.filter{ it != null }
+        y = x.map{ (it>2)? it*2 : null }
 Cycles
 ------
 
@@ -465,6 +465,7 @@ Cycles
            call task1 { input: arg1 = file }
         }
      - ::
+
         file = files
         task1( file )
    * - 2.
