@@ -46,7 +46,7 @@ Workflow general structure
            …
 
            output{
-             <Type> p_1 = <Expression>
+             <Type> result_1 = <Expression>
              …
            }
         }
@@ -446,8 +446,42 @@ Workflow
      - ::
 
         y = x.map{ (it>2)? it*2 : null }
-Cycles
+
+Scatter
 ------
+
+Scatter basics
+
+.. code-block::
+
+   context = createScatter(range1)                        //Create scatter with range range1
+   a = calcInScatter(context) { i_v -> i_v * 2 }  //Expression in scatter: a = i*2
+   context = addValue(context, a)                         //Add expression result to scatter
+
+   task1_input1 = calcInScatter(context) { i_v, a_v -> array1[i_v] }          //Create call input1 in cycle: input1 = array1[i]
+   task1_input2 = calcInScatter(context) { i_v, a_v -> a_value*array2[i_v] }  //Create call input2 in cycle: input1 = a*array2[i]
+   task1( task1_input1, task1_input2 )                                                    //Call for each pair array1[i], 2*array2[i], i =...
+   context = addValue(context, process_pair.out.result)                                   //Add call result to scatter context
+
+   context = addScatter(context, range2) //Add inner scatter with range range2
+   ij = calcInScatter(context) { i_v, a_v, j_v -> i_v * j_v }  //Cartesian product ij = i*j
+   context = addValue(context, ij)
+
+Conditional block in scatter
+.. code-block::
+
+   context = createScatter(i_array)                                                    //Create scatter with range range1
+   task1_context = condition(context) { i_v -> i_v>2 }
+   task1_input_value = calcInScatter(call1_context) { i_v -> i_v }
+   task1( call1_input_value )
+   context = addConditionalValue(context, call1.out.result, call1_context)
+   task1_result = calcInScatter(context) { i_v,call1_result_v -> call1_result_v }
+
+.. code-block::
+
+   context = createScatter(range1)
+   if_context = condition(context) { i_value -> i_value > 5 }
+   
 
 .. list-table::
    :header-rows: 1
